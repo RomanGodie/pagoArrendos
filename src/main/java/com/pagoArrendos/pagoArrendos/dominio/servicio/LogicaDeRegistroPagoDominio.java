@@ -1,8 +1,12 @@
 package com.pagoArrendos.pagoArrendos.dominio.servicio;
 
 import com.pagoArrendos.pagoArrendos.dominio.dto.RespuestaRegistroPagosDto;
+import com.pagoArrendos.pagoArrendos.dominio.excepcion.ExcepcionDeLogicaDeDominio;
 import com.pagoArrendos.pagoArrendos.dominio.modelo.RegistroPagos;
 import com.pagoArrendos.pagoArrendos.dominio.puerto.PuertoRegistroPagos;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class LogicaDeRegistroPagoDominio {
     PuertoRegistroPagos puertoRegistroPagos;
@@ -25,8 +29,9 @@ public class LogicaDeRegistroPagoDominio {
         }
     }
 
-    public RespuestaRegistroPagosDto validarMonto (boolean arrendatarioExistente, RegistroPagos registroPagos) {
+    public RespuestaRegistroPagosDto validarMonto(boolean arrendatarioExistente, RegistroPagos registroPagos) {
         int nuevoValorParaRegistrarEnBaseDatos = 0;
+        validarFechaImpar(registroPagos);
         if (arrendatarioExistente) {
             int valorRegistradoEnBaseDatos = Integer.parseInt(puertoRegistroPagos.
                     readUnSoloRegistroPagosEnBaseDatosConDocumentoIdentificacionArrendatarioYCodigoInmuebleDirecto(registroPagos).
@@ -64,6 +69,20 @@ public class LogicaDeRegistroPagoDominio {
                 puertoRegistroPagos.createRegistroPagosEnBaseDatos(registroPagos);
                 return new RespuestaRegistroPagosDto("gracias por pagar todo tu arriendo");
             }
+        }
+    }
+
+    public boolean validarFechaImpar(RegistroPagos registroPagos){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaIngresada = LocalDate.parse(registroPagos.getFechaPago(),formatter);
+        System.out.println(fechaIngresada);
+        int diaDeFechaIngresada =  fechaIngresada.getDayOfMonth();
+        System.out.println(diaDeFechaIngresada);
+        if(diaDeFechaIngresada % 2 == 0){
+            return true;
+        }else{
+            throw new ExcepcionDeLogicaDeDominio("lo siento pero no se "+
+                    "puede recibir el pago por decreto de administración");
         }
     }
 }
