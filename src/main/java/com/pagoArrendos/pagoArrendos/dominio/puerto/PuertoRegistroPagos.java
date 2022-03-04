@@ -12,7 +12,8 @@ public interface PuertoRegistroPagos {
     RegistroPagos readUnSoloRegistroPagosEnBaseDatosConDocumentoIdentificacionArrendatarioYCodigoInmuebleConBean(RegistroPagos registroPagos);
     RegistroPagos readUnSoloRegistroPagosEnBaseDatosConDocumentoIdentificacionArrendatarioYCodigoInmuebleDirecto(RegistroPagos registroPagos);
     boolean readUnSoloRegistroPagosEnBaseDatosConDocumentoIdentificacionArrendatarioYCodigoInmuebleRetornandoCuantosHay(RegistroPagos registroPagos);
-    List<RegistroPagos> readTodosLosRegistrosPagosEnBaseDatos(RegistroPagos registroPagos);
+    List<RegistroPagos> readTodosLosRegistrosPagosEnBaseDatosConBean();
+    List<RegistroPagos> readTodosLosRegistrosPagosEnBaseDatosDirecto();
     int updateRegistroPagosEnBaseDatos(RegistroPagos registroPagos);
     boolean deleteRegistroPagosEnBaseDatos(RegistroPagos registroPagos);
 }

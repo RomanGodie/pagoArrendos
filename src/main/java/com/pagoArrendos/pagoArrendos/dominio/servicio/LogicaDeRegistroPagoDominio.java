@@ -20,6 +20,14 @@ public class LogicaDeRegistroPagoDominio {
         return validarMonto(validarSiExisteArrendatarioEInmueble(registroPagos), registroPagos);
     }
 
+    public RespuestaRegistroPagosDto logicaDeNegocioConsultaPagos(){
+        String registrosEnBaseDatos = "";
+        for(int i = 0; i < puertoRegistroPagos.readTodosLosRegistrosPagosEnBaseDatosDirecto().size(); i++){
+            registrosEnBaseDatos += puertoRegistroPagos.readTodosLosRegistrosPagosEnBaseDatosDirecto().get(i).toString()+"\n";
+        }
+        return new RespuestaRegistroPagosDto(registrosEnBaseDatos);
+    }
+
     public boolean validarSiExisteArrendatarioEInmueble(RegistroPagos registroPagos) {
         if(puertoRegistroPagos.
                 readUnSoloRegistroPagosEnBaseDatosConDocumentoIdentificacionArrendatarioYCodigoInmuebleRetornandoCuantosHay(registroPagos)){
@@ -75,14 +83,12 @@ public class LogicaDeRegistroPagoDominio {
     public boolean validarFechaImpar(RegistroPagos registroPagos){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate fechaIngresada = LocalDate.parse(registroPagos.getFechaPago(),formatter);
-        System.out.println(fechaIngresada);
         int diaDeFechaIngresada =  fechaIngresada.getDayOfMonth();
-        System.out.println(diaDeFechaIngresada);
         if(diaDeFechaIngresada % 2 == 0){
-            return true;
-        }else{
             throw new ExcepcionDeLogicaDeDominio("lo siento pero no se "+
                     "puede recibir el pago por decreto de administración");
+        }else{
+            return true;
         }
     }
 }

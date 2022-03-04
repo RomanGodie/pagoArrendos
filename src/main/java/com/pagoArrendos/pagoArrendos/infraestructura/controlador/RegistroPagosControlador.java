@@ -16,4 +16,9 @@ public class RegistroPagosControlador {
     public RespuestaRegistroPagosDto registrarPago(@RequestBody RegistroPagosDtoInfraestructura registroPagosDtoInfraestructura){
         return intermediarioRegistroPagosServicioAplicacion.transaccionDeControladorADominio(registroPagosDtoInfraestructura);
     }
+
+    @GetMapping("/pagos")
+    public RespuestaRegistroPagosDto leerTodosLosPagos(){
+        return intermediarioRegistroPagosServicioAplicacion.transaccionDeBaseDeDatosARespuestaRegistroPagosDtoDominio();
+    }
 }

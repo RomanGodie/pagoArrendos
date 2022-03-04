@@ -18,4 +18,8 @@ public class IntermediarioRegistroPagosServicioAplicacion {
                 logicaDeNegocioRegistroPago(mapperRegistroPagoAplicacion.
                         conversorRegistroPagoDtoInfraestructuraARegistroPagoDeDominio(registroPagosDtoInfraestructura));
     }
+
+    public RespuestaRegistroPagosDto transaccionDeBaseDeDatosARespuestaRegistroPagosDtoDominio(){
+        return logicaDeRegistroPagoDominio.logicaDeNegocioConsultaPagos();
+    }
 }

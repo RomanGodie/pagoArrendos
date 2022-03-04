@@ -88,10 +88,23 @@ public class PuertoRegistroPagosImplementacion implements PuertoRegistroPagos {
     }
 
     @Override
-    public List<RegistroPagos> readTodosLosRegistrosPagosEnBaseDatos(RegistroPagos registroPagos) {
+    public List<RegistroPagos> readTodosLosRegistrosPagosEnBaseDatosConBean() {
         String consulta = "SELECT documentoIdentificacionArrendatario, codigoInmueble, valorPagado, fechaPago FROM pagos";
         List<RegistroPagos> todosLosRegistros = jdbcTemplate.query(consulta, new BeanPropertyRowMapper<>(RegistroPagos.class));
+        System.out.println(todosLosRegistros);
         return todosLosRegistros;
+    }
+
+    public List<RegistroPagos> readTodosLosRegistrosPagosEnBaseDatosDirecto(){
+        String consulta = "SELECT documentoIdentificacionArrendatario, codigoInmueble, valorPagado, fechaPago FROM pagos";
+        return jdbcTemplate.query(consulta,(rs, rowNum) ->
+                new RegistroPagos(
+                        rs.getInt(1),
+                        rs.getString("documentoIdentificacionArrendatario"),
+                        rs.getString("codigoInmueble"),
+                        rs.getString("valorPagado"),
+                        rs.getString("fechaPago")
+                ));
     }
 
     @Override
