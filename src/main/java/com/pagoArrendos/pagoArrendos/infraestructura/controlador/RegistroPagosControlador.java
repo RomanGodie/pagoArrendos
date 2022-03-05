@@ -1,6 +1,7 @@
 package com.pagoArrendos.pagoArrendos.infraestructura.controlador;
 
 import com.pagoArrendos.pagoArrendos.aplicacion.servicio.IntermediarioRegistroPagosServicioAplicacion;
+import com.pagoArrendos.pagoArrendos.dominio.dto.RespuestaConsultaPagosDto;
 import com.pagoArrendos.pagoArrendos.dominio.dto.RespuestaRegistroPagosDto;
 import com.pagoArrendos.pagoArrendos.infraestructura.dto.RegistroPagosDtoInfraestructura;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class RegistroPagosControlador {
     }
 
     @GetMapping("/pagos")
-    public RespuestaRegistroPagosDto leerTodosLosPagos(){
+    public RespuestaConsultaPagosDto[] leerTodosLosPagos(){
         return intermediarioRegistroPagosServicioAplicacion.transaccionDeBaseDeDatosARespuestaRegistroPagosDtoDominio();
     }
 }

@@ -1,6 +1,7 @@
 package com.pagoArrendos.pagoArrendos.aplicacion.servicio;
 
 import com.pagoArrendos.pagoArrendos.aplicacion.mapper.MapperRegistroPagoAplicacion;
+import com.pagoArrendos.pagoArrendos.dominio.dto.RespuestaConsultaPagosDto;
 import com.pagoArrendos.pagoArrendos.dominio.dto.RespuestaRegistroPagosDto;
 import com.pagoArrendos.pagoArrendos.dominio.servicio.LogicaDeRegistroPagoDominio;
 import com.pagoArrendos.pagoArrendos.infraestructura.dto.RegistroPagosDtoInfraestructura;
@@ -19,7 +20,7 @@ public class IntermediarioRegistroPagosServicioAplicacion {
                         conversorRegistroPagoDtoInfraestructuraARegistroPagoDeDominio(registroPagosDtoInfraestructura));
     }
 
-    public RespuestaRegistroPagosDto transaccionDeBaseDeDatosARespuestaRegistroPagosDtoDominio(){
+    public RespuestaConsultaPagosDto[] transaccionDeBaseDeDatosARespuestaRegistroPagosDtoDominio(){
         return logicaDeRegistroPagoDominio.logicaDeNegocioConsultaPagos();
     }
 }

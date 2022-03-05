@@ -1,5 +1,6 @@
 package com.pagoArrendos.pagoArrendos.dominio.servicio;
 
+import com.pagoArrendos.pagoArrendos.dominio.dto.RespuestaConsultaPagosDto;
 import com.pagoArrendos.pagoArrendos.dominio.dto.RespuestaRegistroPagosDto;
 import com.pagoArrendos.pagoArrendos.dominio.excepcion.ExcepcionDeLogicaDeDominio;
 import com.pagoArrendos.pagoArrendos.dominio.modelo.RegistroPagos;
@@ -20,12 +21,19 @@ public class LogicaDeRegistroPagoDominio {
         return validarMonto(validarSiExisteArrendatarioEInmueble(registroPagos), registroPagos);
     }
 
-    public RespuestaRegistroPagosDto logicaDeNegocioConsultaPagos(){
-        String registrosEnBaseDatos = "";
+    public RespuestaConsultaPagosDto[] logicaDeNegocioConsultaPagos(){
+        RespuestaConsultaPagosDto[] respuestaConsultaPagosDtosMultiple =
+                new RespuestaConsultaPagosDto[puertoRegistroPagos.readTodosLosRegistrosPagosEnBaseDatosDirecto().size()];
+        RegistroPagos registroPagos;
         for(int i = 0; i < puertoRegistroPagos.readTodosLosRegistrosPagosEnBaseDatosDirecto().size(); i++){
-            registrosEnBaseDatos += puertoRegistroPagos.readTodosLosRegistrosPagosEnBaseDatosDirecto().get(i).toString()+"\n";
+            registroPagos = puertoRegistroPagos.readTodosLosRegistrosPagosEnBaseDatosDirecto().get(i);
+            respuestaConsultaPagosDtosMultiple[i] = new RespuestaConsultaPagosDto(registroPagos.getId(),
+                    registroPagos.getDocumentoIdentificacionArrendatario(),
+                    registroPagos.getCodigoInmueble(),
+                    registroPagos.getValorPagado(),
+                    registroPagos.getFechaPago());
         }
-        return new RespuestaRegistroPagosDto(registrosEnBaseDatos);
+        return respuestaConsultaPagosDtosMultiple;
     }
 
     public boolean validarSiExisteArrendatarioEInmueble(RegistroPagos registroPagos) {

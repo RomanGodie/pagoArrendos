@@ -95,11 +95,12 @@ public class PuertoRegistroPagosImplementacion implements PuertoRegistroPagos {
         return todosLosRegistros;
     }
 
+    @Override
     public List<RegistroPagos> readTodosLosRegistrosPagosEnBaseDatosDirecto(){
-        String consulta = "SELECT documentoIdentificacionArrendatario, codigoInmueble, valorPagado, fechaPago FROM pagos";
+        String consulta = "SELECT id, documentoIdentificacionArrendatario, codigoInmueble, valorPagado, fechaPago FROM pagos";
         return jdbcTemplate.query(consulta,(rs, rowNum) ->
                 new RegistroPagos(
-                        rs.getInt(1),
+                        rs.getInt("id"),
                         rs.getString("documentoIdentificacionArrendatario"),
                         rs.getString("codigoInmueble"),
                         rs.getString("valorPagado"),
