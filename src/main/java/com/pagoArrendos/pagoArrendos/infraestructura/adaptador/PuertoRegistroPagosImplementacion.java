@@ -78,6 +78,32 @@ public class PuertoRegistroPagosImplementacion implements PuertoRegistroPagos {
     }
 
     @Override
+    public RegistroPagos readreadUnSoloRegistroPagosEnBaseDatosConDocumentoIdentificacionArrendatario(RegistroPagos registroPagos){
+        String consulta = "SELECT * FROM pagos WHERE documentoIdentificacionArrendatario = ?";
+        return jdbcTemplate.queryForObject(consulta,
+                new Object[]{registroPagos.getDocumentoIdentificacionArrendatario()},
+                (rs, rowNum) -> new RegistroPagos(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5)));
+    }
+
+    @Override
+    public RegistroPagos readreadUnSoloRegistroPagosEnBaseDatosConCodigoInmueble(RegistroPagos registroPagos){
+        String consulta = "SELECT * FROM pagos WHERE codigoInmueble LIKE ?";
+        return jdbcTemplate.queryForObject(consulta,
+                new Object[]{"%"+registroPagos.getCodigoInmueble()+"%"},
+                (rs, rowNum) -> new RegistroPagos(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5)));
+    }
+
+    @Override
     public boolean readUnSoloRegistroPagosEnBaseDatosConDocumentoIdentificacionArrendatarioYCodigoInmuebleRetornandoCuantosHay(RegistroPagos registroPagos){
         String sql = "SELECT COUNT(documentoIdentificacionArrendatario)"+
                 "FROM pagos WHERE documentoIdentificacionArrendatario = ? AND codigoInmueble LIKE ?";
@@ -86,6 +112,28 @@ public class PuertoRegistroPagosImplementacion implements PuertoRegistroPagos {
                 Integer.class);
         return (existe >= 1);
     }
+
+    @Override
+    public boolean readUnSoloRegistroPagosEnBaseDatosConDocumentoIdentificacionArrendatarioRetornandoCuantosHay(RegistroPagos registroPagos){
+        String sql = "SELECT COUNT(documentoIdentificacionArrendatario)"+
+                "FROM pagos WHERE documentoIdentificacionArrendatario = ?";
+        int existe = jdbcTemplate.queryForObject(sql,
+                new Object[]{registroPagos.getDocumentoIdentificacionArrendatario()},
+                Integer.class);
+        return (existe >= 1);
+    }
+
+    @Override
+    public boolean readUnSoloRegistroPagosEnBaseDatosConCodigoInmuebleRetornandoCuantosHay(RegistroPagos registroPagos){
+        String sql = "SELECT COUNT(codigoInmueble)"+
+                "FROM pagos WHERE codigoInmueble LIKE ?";
+        int existe = jdbcTemplate.queryForObject(sql,
+                new Object[]{"%"+registroPagos.getCodigoInmueble()+"%"},
+                Integer.class);
+        return (existe >= 1);
+    }
+
+
 
     @Override
     public List<RegistroPagos> readTodosLosRegistrosPagosEnBaseDatosConBean() {

@@ -1,6 +1,5 @@
 package com.pagoArrendos.pagoArrendos.dominio.puerto;
 
-import com.pagoArrendos.pagoArrendos.dominio.dto.RespuestaRegistroPagosDto;
 import com.pagoArrendos.pagoArrendos.dominio.modelo.RegistroPagos;
 
 import java.util.List;
@@ -11,7 +10,11 @@ public interface PuertoRegistroPagos {
     long createRegistroPagosEnBaseDatosRetornandoIdComplejo(RegistroPagos registroPagos);
     RegistroPagos readUnSoloRegistroPagosEnBaseDatosConDocumentoIdentificacionArrendatarioYCodigoInmuebleConBean(RegistroPagos registroPagos);
     RegistroPagos readUnSoloRegistroPagosEnBaseDatosConDocumentoIdentificacionArrendatarioYCodigoInmuebleDirecto(RegistroPagos registroPagos);
+    RegistroPagos readreadUnSoloRegistroPagosEnBaseDatosConDocumentoIdentificacionArrendatario(RegistroPagos registroPagos);
+    RegistroPagos readreadUnSoloRegistroPagosEnBaseDatosConCodigoInmueble(RegistroPagos registroPagos);
     boolean readUnSoloRegistroPagosEnBaseDatosConDocumentoIdentificacionArrendatarioYCodigoInmuebleRetornandoCuantosHay(RegistroPagos registroPagos);
+    boolean readUnSoloRegistroPagosEnBaseDatosConDocumentoIdentificacionArrendatarioRetornandoCuantosHay(RegistroPagos registroPagos);
+    boolean readUnSoloRegistroPagosEnBaseDatosConCodigoInmuebleRetornandoCuantosHay(RegistroPagos registroPagos);
     List<RegistroPagos> readTodosLosRegistrosPagosEnBaseDatosConBean();
     List<RegistroPagos> readTodosLosRegistrosPagosEnBaseDatosDirecto();
     int updateRegistroPagosEnBaseDatos(RegistroPagos registroPagos);
